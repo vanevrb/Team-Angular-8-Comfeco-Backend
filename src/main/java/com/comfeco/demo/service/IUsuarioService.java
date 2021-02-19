@@ -11,8 +11,8 @@ public interface IUsuarioService {
 
     Usuario registrarTransaccional(Usuario u);
     Usuario findByCorreo(String correo);
+    Usuario findByNickname(String nickname);
     Page<Usuario> listar(Pageable page);
     void actualizarClaveTransaccional(ChangePasswordDTO dto);
-
 
 }

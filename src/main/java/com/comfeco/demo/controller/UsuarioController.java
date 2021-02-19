@@ -52,13 +52,22 @@ public class UsuarioController {
             response.put("code", 500);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping("/page/{page}")
     private Page<Usuario> listar(@PathVariable Integer page){
         Pageable pageable = PageRequest.of(page, 10);
         return usuarioService.listar(pageable);
+    }
+
+    @GetMapping("/buscar/nickname/{nickname}")
+    private ResponseEntity<Usuario> buscarByNickname(@PathVariable String nickname){
+        return new ResponseEntity<>(usuarioService.findByNickname(nickname), HttpStatus.OK);
+    }
+
+    @GetMapping("/buscar/correo/{correo}")
+    private ResponseEntity<Usuario> buscarByCorreo(@PathVariable String correo){
+        return new ResponseEntity<>(usuarioService.findByCorreo(correo), HttpStatus.OK);
     }
 
     @GetMapping("/recuperar/{email}")

@@ -10,6 +10,8 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Usuario findUsuarioByUsuCorreo(String usuCorreo);
 
+    Usuario findUsuarioByUsuNickname(String usuNickname);
+
     @Modifying
     @Query(value="INSERT INTO usuario_rol(usu_id, rol_id) VALUES (:idUsuario, :idRol)", nativeQuery = true)
     void registrarRolPorDefecto(@Param("idUsuario") Long idUsuario, @Param("idRol") Integer idRol);

@@ -49,6 +49,11 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
     }
 
     @Override
+    public Usuario findByNickname(String nickname) {
+        return usuarioRepository.findUsuarioByUsuNickname(nickname);
+    }
+
+    @Override
     public Page<Usuario> listar(Pageable page) {
         return usuarioRepository.findAll(page);
     }
