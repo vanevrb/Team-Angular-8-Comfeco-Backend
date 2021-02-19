@@ -74,7 +74,7 @@ public class UsuarioController {
             mailMessage.setTo(u.getUsuCorreo());
             mailMessage.setSubject("Recupera tu cuenta");
             mailMessage.setFrom("gusramirez0101@gmail.com");
-            mailMessage.setText("Para cambiar tu contraseña click al siguiente link: " + "https://comfeco-backend.herokuapp.com/confirm/account/" + ct.getConfirmationToken());
+            mailMessage.setText("Para cambiar tu contraseña click al siguiente link: " + "https://localhost:4200/auth/restore/" + ct.getConfirmationToken());
             this.emailService.sendEmail(mailMessage);
 
             rs.put("message", "Correo electrónico enviado");
@@ -82,7 +82,10 @@ public class UsuarioController {
 
             return new ResponseEntity<>(rs, HttpStatus.OK);
         } else {
-            throw new ModeloNotFoundException("Usuario no encontrado");
+            rs.put("message", "Token no encontrado y/o expirado");
+            rs.put("code", 500);
+
+            return new ResponseEntity<>(rs, HttpStatus.BAD_REQUEST);
         }
     }
 
