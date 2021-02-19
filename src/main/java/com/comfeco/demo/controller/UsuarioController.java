@@ -74,7 +74,7 @@ public class UsuarioController {
             mailMessage.setTo(u.getUsuCorreo());
             mailMessage.setSubject("Recupera tu cuenta");
             mailMessage.setFrom("gusramirez0101@gmail.com");
-            mailMessage.setText("Para cambiar tu contraseña click al siguiente link: " + "https://localhost:4200/auth/restore/" + ct.getConfirmationToken());
+            mailMessage.setText("Para cambiar tu contraseña click al siguiente link: " + "http://localhost:4200/auth/restore/" + ct.getConfirmationToken());
             this.emailService.sendEmail(mailMessage);
 
             rs.put("message", "Correo electrónico enviado");
