@@ -1,6 +1,7 @@
 package com.comfeco.demo.controller;
 
 import com.comfeco.demo.entity.ConfirmationToken;
+import com.comfeco.demo.entity.Perfil;
 import com.comfeco.demo.entity.Usuario;
 import com.comfeco.demo.exception.ModeloNotFoundException;
 import com.comfeco.demo.service.IConfirmationTokenService;
@@ -39,7 +40,10 @@ public class UsuarioController {
     private ResponseEntity<?> registrar(@RequestBody Usuario usuario){
         Map<String, Object> response = new HashMap<>();
 
+        Perfil perfil = new Perfil();
+
         usuario.setUsuClave(bcrypt.encode(usuario.getUsuClave()));
+        usuario.setPerfil(perfil);
 
         try {
             usuarioService.registrarTransaccional(usuario);

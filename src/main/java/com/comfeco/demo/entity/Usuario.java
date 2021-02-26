@@ -26,6 +26,11 @@ public class Usuario implements Serializable {
 
     private Boolean usuEstado;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn(name="id_usuario", nullable = false)
+    private Perfil perfil;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_rol",

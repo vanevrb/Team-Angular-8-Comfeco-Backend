@@ -9,5 +9,4 @@ public interface ICRUD<T, V> {
     List<T> listar();
     T listarPorId(V v);
     void eliminar(V v);
-    void eliminar(Integer v);
 }

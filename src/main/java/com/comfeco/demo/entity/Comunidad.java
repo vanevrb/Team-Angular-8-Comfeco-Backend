@@ -1,9 +1,11 @@
 package com.comfeco.demo.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
+@Entity
 public class Comunidad {
 
     @Id
@@ -12,7 +14,11 @@ public class Comunidad {
 
     private String nombreComunidad;
 
-    private Usuario creadorComunidad;
+    @ManyToOne
+    @JoinColumn(name="id_creador")
+    private Perfil creadorComunidad;
+
+
 
 
 }
