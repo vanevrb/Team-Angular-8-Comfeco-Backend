@@ -14,9 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Security;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +65,17 @@ public class UsuarioController {
         Pageable pageable = PageRequest.of(page, 10);
         return usuarioService.listar(pageable);
     }
+
+    @GetMapping
+    private ResponseEntity<Usuario> listarUsuarioAutenticado(){
+        Usuario u = this.usuarioService.findByCorreo(SecurityContextHolder.getContext().getAuthentication().getName());
+        if(u.getUsuId() != null){
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } else {
+            throw new ModeloNotFoundException("Usuario no encontrado");
+        }
+    }
+
 
     @GetMapping("/buscar/nickname/{nickname}")
     private ResponseEntity<Usuario> buscarByNickname(@PathVariable String nickname){
