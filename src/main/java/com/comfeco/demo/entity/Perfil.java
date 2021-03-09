@@ -1,9 +1,12 @@
 package com.comfeco.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +34,12 @@ public class Perfil {
     @Column(length = 140)
     private String biografia;
 
-    // private byte[] avatar;
+    private String avatar;
+
+    private Long puntaje;
+
+    @OneToMany
+    private List<Insignia> insignias;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="perfiles_conocimientos", joinColumns= @JoinColumn(name="perfil_id"),
@@ -39,12 +47,14 @@ public class Perfil {
             uniqueConstraints= {@UniqueConstraint(columnNames= {"perfil_id", "conocimiento_id"})})
     private List<Conocimiento> conocimientos;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name="perfiles_redes", joinColumns= @JoinColumn(name="perfil_id"),
-            inverseJoinColumns=@JoinColumn(name="red_id"),
-            uniqueConstraints= {@UniqueConstraint(columnNames= {"perfil_id", "red_id"})})
-    private List<RedSocial> redesSociales;
 
+    @OneToMany(mappedBy = "perfil", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<PerfilRedSocial> redesSociales;
 
+    @PrePersist
+    void prePersist(){
+        this.puntaje = Long.valueOf(0);
+    }
 
 }

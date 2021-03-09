@@ -60,6 +60,42 @@ public class UsuarioController {
         }
     }
 
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    private ResponseEntity<?> editar(@RequestBody Usuario usuario){
+        Map<String, Object> rs = new HashMap<>();
+
+        Usuario u = this.usuarioService.findByCorreo(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        if(u.getUsuId() != null){
+            if(usuario.getUsuClave() == null){
+                usuario.setUsuClave(u.getUsuClave());
+                usuario.setRoles((u.getRoles()));
+                this.usuarioService.modificar(usuario);
+                rs.put("message", "Usuario modificado correctamente");
+                rs.put("status", 200);
+            } else {
+                String claveNueva = usuario.getUsuClave();
+                boolean coinciden = bcrypt.matches(claveNueva, u.getUsuClave());
+                if(!coinciden){
+                    usuario.setUsuClave(bcrypt.encode(claveNueva));
+                    usuario.setRoles((u.getRoles()));
+                    rs.put("message", "Datos y contraseña cambiados correctamente");
+                    rs.put("status", 200);
+                }
+                else
+                    usuario.setUsuClave(u.getUsuClave());
+                    usuario.setRoles((u.getRoles()));
+                    this.usuarioService.modificar(usuario);
+                    rs.put("message", "Usuario modificado correctamente");
+                    rs.put("status", 200);
+            }
+           return new ResponseEntity<>(rs, HttpStatus.OK);
+        } else {
+            throw new ModeloNotFoundException("Usuario no autenticado");
+        }
+    }
+
+
     @GetMapping("/page/{page}")
     private Page<Usuario> listar(@PathVariable Integer page){
         Pageable pageable = PageRequest.of(page, 10);

@@ -14,5 +14,6 @@ public interface IUsuarioService {
     Usuario findByNickname(String nickname);
     Page<Usuario> listar(Pageable page);
     void actualizarClaveTransaccional(ChangePasswordDTO dto);
+    Usuario modificar(Usuario u);
 
 }

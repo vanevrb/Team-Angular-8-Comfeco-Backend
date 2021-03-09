@@ -43,4 +43,9 @@ public class Usuario implements Serializable {
         this.usuEstado = true;
     }
 
+    @PreUpdate
+    void preUpdate(){
+        this.usuEstado = true;
+    }
+
 }

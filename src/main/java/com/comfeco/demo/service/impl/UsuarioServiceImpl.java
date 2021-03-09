@@ -65,6 +65,12 @@ public class UsuarioServiceImpl implements IUsuarioService, UserDetailsService {
     }
 
     @Override
+    @Transactional
+    public Usuario modificar(Usuario u) {
+        return this.usuarioRepository.save(u);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario user = usuarioRepository.findUsuarioByUsuCorreo(username);
