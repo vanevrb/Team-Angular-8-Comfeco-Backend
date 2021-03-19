@@ -47,6 +47,8 @@ public class Perfil {
             uniqueConstraints= {@UniqueConstraint(columnNames= {"perfil_id", "conocimiento_id"})})
     private List<Conocimiento> conocimientos;
 
+    @ManyToMany(mappedBy = "perfiles")
+    private List<Grupo> grupos;
 
     @OneToMany(mappedBy = "perfil", cascade = CascadeType.ALL)
     @JsonManagedReference
