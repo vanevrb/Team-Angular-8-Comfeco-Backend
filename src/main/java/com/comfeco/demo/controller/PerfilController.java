@@ -45,7 +45,7 @@ public class PerfilController {
         return new ResponseEntity<>(this.perfilService.listar(), HttpStatus.OK);
     }
 
-    @PutMapping(value="/editar/avatar", produces = "appication/json", consumes = "application/json")
+    @PutMapping(value="/editar/avatar", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> editarAvatar(@RequestBody String url){
         Map<String, Object> rs = new HashMap<>();
         Perfil p = this.perfilService.cambiarAvatar(url);
