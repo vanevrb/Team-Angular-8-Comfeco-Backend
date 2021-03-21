@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/grupo")
 public class GrupoController {
@@ -23,6 +27,19 @@ public class GrupoController {
     private ResponseEntity<?> agregar(@RequestBody Grupo grupo){
         Grupo rs = this.grupoService.registrar(grupo);
         return new ResponseEntity<>(rs, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/usuario")
+    private ResponseEntity<?> listarByUsuario(){
+        Map<String, Object> rs = new HashMap<>();
+        List<Grupo> lista = this.grupoService.buscarGruposUsuario();
+        if(rs != null){
+            return new ResponseEntity<>(lista, HttpStatus.OK);
+        } else {
+            rs.put("message", "Usuario no encontrado y/o no autenticado");
+            rs.put("code", 500);
+            return new ResponseEntity<>(rs, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

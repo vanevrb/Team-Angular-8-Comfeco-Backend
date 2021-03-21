@@ -17,6 +17,6 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     void registrarRolPorDefecto(@Param("idUsuario") Long idUsuario, @Param("idRol") Integer idRol);
 
     @Modifying
-    @Query(value="UPDATE Usuario as u set usu_clave = ?1 from confirmation_token as ct where u.usu_id = ct.user_id and ct.confirmation_token = ?2 and ct.estado = true", nativeQuery = true)
+    @Query(value="UPDATE Usuario as u set usu_clave = ?1 from confirmation_token as ct where u.id_usuario = ct.user_id and ct.confirmation_token = ?2 and ct.estado = true", nativeQuery = true)
     void actualizarClave(String password, String tokenId);
 }
